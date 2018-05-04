@@ -1,43 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout
     android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginBottom="10dp"
     tools:context="com.example.user.uploadimages.MainActivity">
 
-    <Button
-        android:text="choose Image"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-
-        android:id="@+id/buttonChoose" />
-
     <ImageView
+        android:id="@+id/imageView2"
+        android:layout_gravity="center"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:background="@drawable/addnew" />
+
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:id="@+id/imageView" />
+        android:layout_gravity="center"
+        android:fontFamily="cursive"
+        android:text="Add new product"
+        android:textColor="#0a0909"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_marginTop="2dp"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/buttonChoose"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom"
+            android:background="#05a673"
+            android:drawableLeft="@drawable/addimage"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:text="choose Image"
+            android:textColor="#fff" />
 
 
-    <Button
-        android:text="Update Image"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="bottom"
+            android:id="@+id/imageView" />
 
-        android:id="@+id/buttonUpload" />
-<EditText
-    android:id="@+id/fruit_name"
-    android:hint="Fruit name"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/fruit_name"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/curveedit"
+        android:drawableLeft="@drawable/addname"
+        android:hint="   Fruit name"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp" />
+
     <EditText
         android:id="@+id/fruit_price"
-        android:hint="Fruit Price"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/curveedit"
+        android:drawableLeft="@drawable/rupeesmall"
+        android:hint="    Fruit Price"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/buttonUpload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/curve1"
+            android:text="Submit"
+            android:textColor="#fff" />
 
+        <Button
+            android:id="@+id/btnSkip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/curvebutton"
+            android:gravity="center"
+            android:text="Skip" />
+    </LinearLayout>
 </LinearLayout>
+    </ScrollView>

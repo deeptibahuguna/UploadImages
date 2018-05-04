@@ -1,41 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+
 <LinearLayout
     android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:showDividers="middle"
+    android:divider="@drawable/divider"
     tools:context="com.example.user.uploadimages.UpdateActivity">
-    <Button
-        android:text="choose image"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
 
-        android:id="@+id/buttonChoose" />
+    <TextView
+
+        android:id="@+id/profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView4"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="Edit Product"
+        android:fontFamily="cursive"
+        android:textAlignment="center"
+        android:textColor="#05a673"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
         android:id="@+id/imageView" />
+
+    <ImageView
+        android:id="@+id/buttonChoose"
+        android:layout_width="fill_parent"
+        android:src="@drawable/camera"
+        android:layout_marginBottom="20dp"
+        android:layout_height="30dp"/>
+
 <EditText
-    android:hint="fruitName"
+    android:hint="  fruitName"
     android:id="@+id/fruit_name"
+    android:paddingLeft="15dp"
+    android:paddingRight="10dp"
+    android:background="@drawable/curveedit"
+    android:drawableLeft="@drawable/addname"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="40dp" />
+
     <EditText
-        android:hint="fruitPrice"
         android:id="@+id/fruit_price"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="40dp"
+        android:drawableLeft="@drawable/rupeesmall"
+        android:hint="  fruit Price"
+        android:digits="1234567890"
+        android:inputType="number"
+        android:paddingLeft="15dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/curveedit"
+        android:paddingRight="10dp" />
 
-    <Button
-        android:text="update Image"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+  <LinearLayout
+      android:orientation="horizontal"
+      android:gravity="center"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
 
-        android:id="@+id/buttonUpload" />
+      <Button
+          android:id="@+id/btnCancel"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Cancel"
+          android:layout_marginRight="20dp"
+          android:background="@drawable/curvebutton"/>
+      <Button
+      android:text="update"
+      android:background="@drawable/curve1"
+      android:textColor="#fff"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/buttonUpload" />
+</LinearLayout>
 
 
 
 </LinearLayout>
+</ScrollView>

@@ -160,58 +160,33 @@ public  class VegitableShop extends Activity {
             final int[] count = {0};
 
 
-            public class MyViewHolder extends RecyclerView.ViewHolder {
+            public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
                 CheckBox c1;
                 public TextView name, price, txtCount, id;
                 public ImageView thumbnail;
                 double amount = 0;
                 public Button buttonInc, buttonDec, orderNow;
-                Spinner mSpinner;
 Button btn_update;
                 public MyViewHolder(View view) {
                     super(view);
-                    name = view.findViewById(R.id.textView);
-                    price = view.findViewById(R.id.price);
+                    name = view.findViewById(R.id.txtName);
+                    price = view.findViewById(R.id.txtPrice);
                     id = view.findViewById(R.id.id);
-                    mSpinner = (Spinner) view.findViewById(R.id.cb1);
                     thumbnail = view.findViewById(R.id.image);
-btn_update=view.findViewById(R.id.update);
-                   // intent = new Intent(context, BillActivity.class);
+                    btn_update=view.findViewById(R.id.update);
+                    view.setOnClickListener(this);
+
+                    // intent = new Intent(context, BillActivity.class);
 
                    // final TextView txtCount = (TextView) view.findViewById(R.id.txt);
                    // Button buttonInc = (Button) view.findViewById(R.id.button1);
                    // Button buttonDec = (Button) view.findViewById(R.id.button2);
 
-                    List<String> categories = new ArrayList<String>();
-                    categories.add("select");
-                    categories.add(".5");
-                    categories.add("1");
-                    categories.add("1.5");
-                    categories.add("2");
-                    categories.add("2.5");
 
-                    categories.add("3");
-                    categories.add("3");
-                    categories.add("3");
-                    categories.add("3");
-                    categories.add("3");
-                    categories.add("3");
-                    categories.add("3");
-
-                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, categories);
-
-                    // Drop down layout style - list view with radio button
-                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                    // attaching data adapter to spinner
-                    mSpinner.setAdapter(dataAdapter);
-
-                    thumbnail.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //  Toast.makeText(context, ""+movieList.getid, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                }
+                public void onClick(View v) {
+                    Intent i=new Intent(getApplicationContext(),MainActivity.class);
+                    startActivity(i);
                 }
             }
 
@@ -242,35 +217,20 @@ btn_update=view.findViewById(R.id.update);
                         .load(movie.getImage())
                         .into(holder.thumbnail);
 
-                holder.mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        // On selecting a spinner ite
-                        String item = parent.getItemAtPosition(position).toString();
-                        if (!"select".equals(item)) {
-                            amount = amount + movie.getPrice() * 5;
-                            Fruit_name = movie.getName();
-                             Fruit_id = movie.getid();
-                            intent.putExtra("key", amount);
-                            intent.putExtra("momos",Fruit_id );
-                            Toast.makeText(VegitableShop.this, ""+Fruit_id, Toast.LENGTH_SHORT).show();
-                            startActivity(intent);
 
-                            // Showing selected spinner item
-                            Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        amount = amount - movie.getPrice();
-                    }
-                });
                 holder.btn_update.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent_update=new Intent(context,UpdateActivity.class);
-                        intent_update.putExtra("id",movie.getid());
+                        int id=movie.getid();
+                        String name=movie.getName();
+                        int price=movie.getPrice();
+                        String image= movie.getImage();
+                        intent_update.putExtra("id",id);
+                        intent_update.putExtra("name",name);
+                        intent_update.putExtra("productprice",price);
+                         //Toast.makeText(context, ""+movie.getPrice(), Toast.LENGTH_SHORT).show();
+                        intent_update.putExtra("image",image);
                         startActivity(intent_update);
                     }
                 });

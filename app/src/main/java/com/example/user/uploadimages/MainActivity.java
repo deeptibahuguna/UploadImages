@@ -39,25 +39,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button buttonUpload;
 
     private ImageView imageView;
-    String Fruit_name,Fruit_price;
+    String Fruit_name,Fruit_price ,uploadImage;
     private Bitmap bitmap;
-EditText Fruit_Name,Fruit_Price;
+EditText edFruit_Name,edFruit_Price ;
+    Button btnSkip;
     private Uri filePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-Fruit_Name= (EditText) findViewById(R.id.fruit_name);
-        Fruit_Price= (EditText) findViewById(R.id.fruit_price);
+        edFruit_Name= (EditText) findViewById(R.id.fruit_name);
+        edFruit_Price= (EditText) findViewById(R.id.fruit_price);
         buttonChoose = (Button) findViewById(R.id.buttonChoose);
         buttonUpload = (Button) findViewById(R.id.buttonUpload);
       //  buttonView = (Button) findViewById(R.id.buttonViewImage);
+        btnSkip=(Button) findViewById(R.id.btnSkip);
+
 
         imageView = (ImageView) findViewById(R.id.imageView);
 
         buttonChoose.setOnClickListener(this);
         buttonUpload.setOnClickListener(this);
+
+        btnSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(getApplicationContext(),VegitableShop.class);
+                startActivity(i);
+            }
+        });
+
+        edFruit_Name.setText("");
+        edFruit_Price.setText("");
+
     }
 
     private void showFileChooser() {
@@ -85,13 +100,13 @@ Fruit_Name= (EditText) findViewById(R.id.fruit_name);
 
     public String getStringImage(Bitmap bmp){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 20, baos);
         byte[] imageBytes = baos.toByteArray();
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
     }
 
-    private void uploadImage(){
+        private void uploadImage() {
         class UploadImage extends AsyncTask<Bitmap,Void,String>{
 
             ProgressDialog loading;
@@ -99,8 +114,7 @@ Fruit_Name= (EditText) findViewById(R.id.fruit_name);
 
             @Override
             protected void onPreExecute() {
-                 Fruit_name=Fruit_Name.getText().toString();
-                Fruit_price=Fruit_Price.getText().toString();
+
                 super.onPreExecute();
                 loading = ProgressDialog.show(MainActivity.this, "Uploading Image", "Please wait...",true,true);
             }
@@ -116,7 +130,7 @@ Fruit_Name= (EditText) findViewById(R.id.fruit_name);
             protected String doInBackground(Bitmap... params) {
 
                 Bitmap bitmap = params[0];
-                String uploadImage = getStringImage(bitmap);
+                 uploadImage = getStringImage(bitmap);
 
                 HashMap<String,String> data = new HashMap<>();
                 data.put(UPLOAD_KEY, uploadImage);
@@ -124,7 +138,7 @@ Fruit_Name= (EditText) findViewById(R.id.fruit_name);
                data.put("Price", Fruit_price);
 
                 String result = rh.sendPostRequest(UPLOAD_URL,data);
-Intent intent=new Intent(MainActivity.this,VegitableShop.class);
+                Intent intent=new Intent(MainActivity.this,VegitableShop.class);
                 startActivity(intent);
                 return result;
             }
@@ -137,10 +151,24 @@ Intent intent=new Intent(MainActivity.this,VegitableShop.class);
     @Override
     public void onClick(View v) {
         if (v == buttonChoose) {
-            showFileChooser();
+
+                showFileChooser();
         }
-        if(v == buttonUpload){
-            uploadImage();
+        if(v == buttonUpload) {
+            Fruit_name=edFruit_Name.getText().toString();
+            Fruit_price=edFruit_Price.getText().toString();
+            if(imageView.getDrawable()==null){
+                Toast.makeText(getApplicationContext(),"enter image",Toast.LENGTH_SHORT).show();
+            } else if(Fruit_name.equals("")){
+                edFruit_Name.setError("enter  name");
+            }else   if(Fruit_price.equals("")){
+                edFruit_Price.setError("enter  price");
+            }
+else {
+                uploadImage();
+            }
         }
+
     }
+
 }
