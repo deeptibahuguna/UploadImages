@@ -1,6 +1,5 @@
 package com.example.user.uploadimages;
 
-import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -28,7 +27,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -38,21 +36,23 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
     String   imageURL;
     public static final String UPLOAD_URL = "http://sabkuch.co.in/sabkuckapp/Update_data.php";
     public static final String UPLOAD_KEY = "Image";
+    public static final String UPLOAD_Name= "Name";
+    public static final String UPLOAD_price = "Price";
     public static final String TAG = "MY MESSAGE";
-    Bitmap bitmapOldImage;
-    String uploadImage;
 
     private int PICK_IMAGE_REQUEST = 1;
 String name;
-    int price;
+
     private ImageView buttonChoose;
     private Button buttonUpload ,btnCancel;
-int a;
+Integer a;
     private ImageView imageView;
 int Fruit_p;
     private Bitmap bitmap;
 EditText Fruit_name,Fruit_price;
     private Uri filePath;
+    int price;
+    String uploadImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,15 +72,12 @@ EditText Fruit_name,Fruit_price;
         a = b.getInt("id");
         name  = b.getString ("name");
 
-        price = b.getInt("productprice");
-        Fruit_p=b.getInt("price");
+        price=b.getInt("productprice");
         Toast.makeText(this, ""+Fruit_p, Toast.LENGTH_SHORT).show();
         imageURL = b.getString("image");
         Glide.with(getApplicationContext())
                 .load(imageURL)
                 .into(imageView);
-
-
 
         Fruit_name.setText(name);
         Fruit_price.setText(""+price);
@@ -102,6 +99,7 @@ EditText Fruit_name,Fruit_price;
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
+
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
@@ -130,13 +128,14 @@ EditText Fruit_name,Fruit_price;
     }
 
     private void uploadImage(){
-        class UploadImage extends AsyncTask<Bitmap,Void,String>{
+        class UploadImage extends AsyncTask<String,Void,String>{
 
             ProgressDialog loading;
             RequestHandler rh = new RequestHandler();
 
             @Override
             protected void onPreExecute() {
+
                 name=Fruit_name.getText().toString();
                 price= Integer.parseInt(Fruit_price.getText().toString());
                 super.onPreExecute();
@@ -153,9 +152,12 @@ EditText Fruit_name,Fruit_price;
             }
 
             @Override
-            protected String doInBackground(Bitmap... params) {
+            protected String doInBackground(String... params) {
+           //     Bitmap bitmap = params[0];
+                String string1=params[0];
+                String string2=params[1];
+                String string3=params[2];
 
-                Bitmap bitmap = params[0];
                  uploadImage = getStringImage(bitmap);
 
                 HashMap<String,String> data = new HashMap<>();
@@ -164,8 +166,8 @@ EditText Fruit_name,Fruit_price;
                 a = b.getInt("id");
                 data.put(UPLOAD_KEY, uploadImage);
                 data.put("id", String.valueOf(a));
-                data.put("Name", name);
-                data.put("productprice", String.valueOf(price));
+                data.put( UPLOAD_Name, name);
+                data.put(UPLOAD_price, String.valueOf(price));
 
                 String result = rh.sendPostRequest(UPLOAD_URL,data);
 
@@ -173,9 +175,8 @@ EditText Fruit_name,Fruit_price;
             }
         }
 
-
         UploadImage ui = new UploadImage();
-        ui.execute(bitmap);
+        ui.execute(uploadImage,String.valueOf(price),name);
     }
 
     @Override

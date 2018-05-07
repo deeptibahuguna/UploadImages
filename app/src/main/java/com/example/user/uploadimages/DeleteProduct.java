@@ -9,11 +9,9 @@ import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -36,24 +34,16 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoginActivity extends AppCompatActivity {
-    TextView txtSignUp;    Button btnLogin;
-    InputStream inpst=null;
-    String line,result;
-    static String email,password,user_id,firstName , lastName , phoneNo,about,language ,profileImage,backgroundImage ;
-    EditText edEmail,edPassword;
-    boolean connected=false;
-    int userID;
-    static String url="http://sabkuch.co.in/sabkuckapp/adminlogin.php";
-    Button btnSignUp;
+public class DeleteProduct extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_delete_product);
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitNetwork().build());
         new AsyncTaskRunner().execute((Void[])null);
-
     }
+
 
 
 
@@ -71,13 +61,6 @@ public class LoginActivity extends AppCompatActivity {
 
     class AsyncTaskRunner extends AsyncTask<Void,Void,Void> {
 
-        @Override
-        protected void onPreExecute() {
-            edEmail=(EditText)findViewById(R.id.edLoginEmail);
-            edPassword=(EditText)findViewById(R.id.edLoginPassword);
-            btnLogin=(Button)findViewById(R.id.btnLogin);
-
-        }
 
         @Override
         protected void onPostExecute(Void aVoid) {
@@ -91,80 +74,58 @@ public class LoginActivity extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
 
 
-            btnLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    email=edEmail.getText().toString();
-                    password=edPassword.getText().toString();
 
-                    connected=Connetion();
+
+                  boolean  connected=Connetion();
                     if (connected==true) {
+                        Vegitable vegitable=new Vegitable();
 
-                        if (TextUtils.isEmpty(email)) {
-                            edEmail.setError("Please enter email");
-                        }else  if (TextUtils.isEmpty(password)) {
-                        edPassword.setError("Please enter password");
-                        } else {
                             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-                            nameValuePairs.add(new BasicNameValuePair("email",email));
-                            nameValuePairs.add(new BasicNameValuePair("password",password));
+                        String id=String.valueOf(vegitable.getid());
+                            nameValuePairs.add(new BasicNameValuePair("id",id));
+
                             //  nameValuePairs.add(new BasicNameValuePair("first_name",firstName));
 
                             HttpClient httpClient = new DefaultHttpClient();
-                            HttpPost httpPost = new HttpPost(url);
+                            HttpPost httpPost = new HttpPost("http://sabkuch.co.in/sabkuckapp/deleteItem.php?id="+"67");
                             try {
                                 httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                                 HttpResponse response = httpClient.execute(httpPost);
                                 HttpEntity entity = response.getEntity();
-                                inpst = entity.getContent();
+                              InputStream inpst = entity.getContent();
                                 BufferedReader br = new BufferedReader(new InputStreamReader(inpst));
                                 StringBuilder sb = new StringBuilder();
-
-
+                                String line,result;
                                 while ((line = br.readLine()) != null) {
                                     sb.append(line + "\n");
                                 }
                                 inpst.close();
                                 result = sb.toString();
 
-                                JSONObject responseJSON = new JSONObject(result);
-                                String status = responseJSON.getString("status");
-                              //  String userName = responseJSON.getString("email");
+                            //    JSONObject responseJSON = new JSONObject(result);
+                              //  String status = responseJSON.getString("status");
+                                //  String userName = responseJSON.getString("email");
 
 
                                 // String msg = jsonObject.getString("status_messsage");
-                             //   if (status.equals("success")) {
-                                    Intent intent = new Intent(getApplicationContext(), AllOrderListNavigationDrawerActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-                                    finish();
-                               // }
-                               // else
-                                 if (status.equals("failure")){
-                                    edPassword.setText("");
-                                    Toast.makeText(getApplicationContext(), "Invalid Email OR Password", Toast.LENGTH_LONG).show();
-                                }else
-                                {
-                                    edPassword.setText("");
-                                    Toast.makeText(getApplicationContext(), "Error:Not Responding,Try After Sometime", Toast.LENGTH_LONG).show();
-                                }
+                                //   if (status.equals("success")) {
+                                Intent intent = new Intent(getApplicationContext(), AllOrderListNavigationDrawerActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                                // }
+
                             } catch (UnsupportedEncodingException e) {
                                 e.printStackTrace();
                             } catch (ClientProtocolException e) {
                                 e.printStackTrace();
                             } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (JSONException e) {
+
                                 e.printStackTrace();
                             }
                         }
-                    }else
-                    {
-                        Toast.makeText(getApplicationContext(), "NO INTERNET CONNECTION! TRY AGAIN...", Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
+
             return null;
         }
     }
@@ -173,9 +134,4 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-
 }
-
-
-
-

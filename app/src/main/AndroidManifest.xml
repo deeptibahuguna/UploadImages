@@ -18,32 +18,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".VegitableShop"
-            android:noHistory="true"         >
+        <activity
+            android:name=".DeleteProduct"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
-           />
-        <activity android:name=".UpdateActivity"
-          />
-
-        <activity android:name=".LoginActivity"
-/>
-        <activity android:name=".OnePersonOrder"
-            android:noHistory="true"/>
-
-        <activity android:name=".AllOrderListNavigationDrawerActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+        <activity android:name=".MainActivity" />
+        <activity android:name=".UpdateActivity" />
+        <activity android:name=".VegitableShop" />
+        <activity
+            android:name=".OnePersonOrder"
+            android:noHistory="true" />
+        <activity
+            android:name=".AllOrderListNavigationDrawerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".OrderList1"
             android:label="@string/title_activity_all_order_list_navigation_drawer"
-            android:theme="@style/AppTheme.NoActionBar"
-        ></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".LoginActivity"></activity>
     </application>
 
 </manifest>

@@ -163,7 +163,7 @@ public  class VegitableShop extends Activity {
             public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
                 CheckBox c1;
                 public TextView name, price, txtCount, id;
-                public ImageView thumbnail;
+                public ImageView thumbnail,imgRemove;
                 double amount = 0;
                 public Button buttonInc, buttonDec, orderNow;
 Button btn_update;
@@ -173,6 +173,7 @@ Button btn_update;
                     price = view.findViewById(R.id.txtPrice);
                     id = view.findViewById(R.id.id);
                     thumbnail = view.findViewById(R.id.image);
+                    imgRemove = view.findViewById(R.id.imgRemove);
                     btn_update=view.findViewById(R.id.update);
                     view.setOnClickListener(this);
 
@@ -185,8 +186,7 @@ Button btn_update;
 
                 }
                 public void onClick(View v) {
-                    Intent i=new Intent(getApplicationContext(),MainActivity.class);
-                    startActivity(i);
+
                 }
             }
 
@@ -222,18 +222,22 @@ Button btn_update;
                     @Override
                     public void onClick(View v) {
                         Intent intent_update=new Intent(context,UpdateActivity.class);
-                        int id=movie.getid();
-                        String name=movie.getName();
-                        int price=movie.getPrice();
-                        String image= movie.getImage();
-                        intent_update.putExtra("id",id);
-                        intent_update.putExtra("name",name);
-                        intent_update.putExtra("productprice",price);
-                         //Toast.makeText(context, ""+movie.getPrice(), Toast.LENGTH_SHORT).show();
-                        intent_update.putExtra("image",image);
+                        intent_update.putExtra("id",movie.getid());
+                        intent_update.putExtra("name",movie.getName());
+                        intent_update.putExtra("productprice",movie.getPrice());
+                        //Toast.makeText(context, ""+movie.getPrice(), Toast.LENGTH_SHORT).show();
+                        intent_update.putExtra("image",movie.getImage());
                         startActivity(intent_update);
                     }
                 });
+
+                holder.imgRemove.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new DeleteProduct();
+                    }
+                });
+
             }
 
 
